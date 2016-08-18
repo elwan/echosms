@@ -1,0 +1,27 @@
+{% extends 'bases.html' %}
+
+{% block content %}
+<div class="container">
+  {% for contact in  contact_enregistrer %}
+  <div class="jumbotron">
+      <div class="message">
+      	<h3> {{ contact.nom }} </h3>
+	<p> {{ contact.prenom  }}  </p>
+	<p> {{ contact.groupe }} </p>
+        <p> {{ contact.numero_telephone }} </p>
+        <p> {{ contact.email_adress }} </p>
+        <p> {{ contact.pays.name }} </p>
+	<h4> enregister par {{ request.user.username }} </h4>
+	<div class="btn-group">
+       	<a class="btn btn-primary"  href="{% url "editer_contact" contact.id %}" role="button" > Editer </a>  {# Editer un message #}
+        <a class="btn btn-danger"  href="{% url "supprimer_contact" contact.id %} " role="button"> Supprimer </a>  {# Supprimer un message #}
+        </div>
+      </div>
+  </div>
+  {% empty %}
+    <p> Aucun contact. </p>
+  {% endfor %}
+
+</div>
+
+  {% endblock %}

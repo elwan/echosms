@@ -1,0 +1,49 @@
+{% extends 'bases.html' %}
+
+
+{% block nav-user-menu %}
+{% endblock %}
+
+{% block sidebar-menu %}
+{% endblock %}
+
+{% block icon-menu %}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-2">
+       <!--<div class="login-panel panel panel-default">
+	<div class="panel-heading">
+	  <h3 class="panel-title">Please Sign Up </h3>
+	</div>
+	<div class="panel-body"> -->
+       <form method="post" action="" class="form-signin">
+         <h3 class="form-signin-heading" >Please Sign Up </h3>
+	    {% csrf_token %}
+
+	    <p class="bs-component">
+	      <!-- <table> -->
+                
+                {{form.media}}
+		{{ form.as_p }}
+		
+	       <!--</table> -->
+	    </p>
+	    <p class="bs-component">
+	      <center>
+		<input class="btn btn-lg btn-success btn-block" type="submit" value="Sign Up" />
+	      </center>
+	    </p>
+	    <input type="hidden" name="next" value="{{ next }}" />
+	  </form>
+ <!--	</div>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+{% endblock %}

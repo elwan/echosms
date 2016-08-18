@@ -1,0 +1,23 @@
+{% extends 'bases.html' %}
+
+{%  block content %}
+<div class="container">
+  <div class="jumbotron">
+    <div class="alert alert-info">
+      <strong>Info!</strong> Vous êtes sur le point de  suprrimer ce groupe !.
+      </div>
+     <form action="" method="post"  >
+
+       {{ groupe_supprimer.nom_groupe }}  ->  (créée le {{ groupe_supprimer.date_added|date:"DATE_FORMAT" }})
+       {% csrf_token %}
+       {{ form.as_p }}
+       <div class="btn-group " >
+	 <input type="submit" class="btn btn-danger"  value="Supprimer"/>
+	 <a href="{% url "lister_groupe" %}" class="btn btn-info" role="button">Retour</a>
+
+       </div>
+
+     </form>
+   </div>
+
+{% endblock %}

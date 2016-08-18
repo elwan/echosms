@@ -1,0 +1,33 @@
+{% extends 'bases.html' %}
+
+{% block content %}
+<div class="container">
+  {% for message in  multi_messages %}
+  {# {% if not message.status_message  %} #} 
+  <div class="jumbotron">
+    
+    <div class="message">
+      
+	<h3> {{ message.numero }} </h3>
+	<p> {{ message.message  }}  </p>
+	<p> {{ message.code }} </p>
+	<h4> enregister par {{ request.user.username}}  </h4> 
+         <p class="text-left">Nombre de caractéres: <span class="badge text-left" > {{message.message | length }} </span> </p>
+	 <div class="btn-group">
+           
+	   <a class="btn btn-primary"  href="{% url "update_message_multi" message.code %}" role="button" > Editer </a> {# Editer un message #}
+	   <a class="btn btn-danger"  href="{% url "delete_message_multi" message.code %}" role="button"> Supprimer </a>{# Supprimer un message #} 
+       	   <a class="btn btn-success"  href="{% url "envoyer_message_multi" message.code %}" role="button" >Envoyer </a> {# Envoyer le message #} 
+	   
+	</div>
+       
+    </div>
+  </div>
+  
+  {% empty %}
+  <p> Aucun message. </p>
+  {% endfor %}
+  {# {% endif %} #}
+</div>
+
+  {% endblock %}

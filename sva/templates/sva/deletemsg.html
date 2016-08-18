@@ -1,0 +1,27 @@
+{% extends 'bases.html' %}
+
+{%  block content %}
+<div class="container">
+  <div class="jumbotron">
+    <div class="alert alert-info">
+      <strong>Info!</strong> Vous êtes sur le point de  suprrimer ce messages !.
+      </div>
+     <form action="" method="post"  >
+       
+       {{ delete_message.numero }} - {{ delete_message.code }} -> {{ del_passager.utilisateur }} (créée le {{ delete_message.date|date:"DATE_FORMAT" }})
+       {% csrf_token %}
+       {{ form.as_p }}
+       <div class="btn-group " >
+	 <input type="submit" class="btn btn-danger"  value="Supprimer"/>
+         {% if delete_message.code|length == 06 %}
+	 <a href="{% url "lister_message" %}" class="btn btn-info" role="button">Retour</a>
+         {% else %}
+         <a href="{% url "lister_message_multi" %}" class="btn btn-info" role="button">Retour</a>
+         {% endif %}
+         
+       </div>
+       
+     </form>
+   </div>
+   
+{% endblock %}

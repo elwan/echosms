@@ -1,0 +1,24 @@
+{% extends 'bases.html' %}
+
+{% block content %}
+<div class="container">
+  {% for groupe in  groupe_enregistrer %}
+  <div class="jumbotron">
+      <div class="message">
+      	<h3> {{ groupe.nom_groupe }} </h3>
+	<p> {{ groupe.about  }}  </p>
+	<h4> enregister par {{ request.user.username }} </h4>
+       	<div class="btn-group">
+	 <a class="btn btn-primary"  href="{% url "editer_groupe" groupe.id %}" role="button" > Editer </a> {# Editer un message #}
+	 <a class="btn btn-danger"  href="{% url "supprimer_groupe" groupe.id %}" role="button"> Supprimer </a> {# Supprimer un message #}
+
+        </div>
+      </div>
+  </div>
+  {% empty %}
+    <p> Aucun groupe. </p>
+  {% endfor %}
+
+</div>
+
+  {% endblock %}
