@@ -42,9 +42,9 @@
 		  </li>
 		</ul>
                 {% endblock %}
-                                
+
 		</div>
-							
+
 	</div><!-- /.container-fluid -->
   </nav>
         {% block sidebar-menu %}
@@ -55,18 +55,28 @@
 	    </div>
 	  </form>
 	  <ul class="nav menu">
+            <!-- Menu pour la gestion des messages  -->
             <li class="active"><a  href="{% url "tableau_de_bord"  %}"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Dashboard</a></li>
             <li><a href="{% url "nouveau_message_multi"  %}"><svg class="glyph stroked empty message"><use xlink:href="#stroked-empty-message"></use></svg> Nouveau Message</a></li>
 	    <li><a href="{% url "lister_message_envoyer"  %}"><svg class="glyph stroked two messages"><use xlink:href="#stroked-two-messages"/></svg>Messages Envoyés</a></li>
-	    <li> <a href="{% url "lister_message_multi"  %}"><svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper"/></svg>Messages </a></li>                                     <li><a href="/logout"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
+	    <li> <a href="{% url "lister_message_multi"  %}"><svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper"/></svg>Messages </a></li>
+            <!-- Fin du menu  -->
+            <li role="presentation" class="divider" ></li> <!--  ligne de separation entre les Menus -->
+            <!-- Menu pour la gestion des contacts  -->
+            <li class=""><a  href="{% url "nouveau_contact"  %}"><svg class="glyph stroked plus sign"><use xlink:href="#stroked-plus-sign"></use></svg> Ajouter Contact</a></li>
+            <li class=""><a  href="{% url "nouveau_groupe"  %}"><svg class="glyph stroked plus sign"><use xlink:href="#stroked-plus-sign"></use></svg> Ajouter Groupe</a></li>
+            <li class=""><a  href="{% url "lister_contact"  %}"><svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper"></use></svg> Afficher les Contacts</a></li>
+            <li class=""><a  href="{% url "lister_groupe"  %}"><svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper"></use></svg> Afficher les Groupes</a></li>
+            <!-- Fin du menu  -->
+            <li><a href="/logout"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
 	  </ul>
 	</div>
-							
+
        <!-- </div> /.container-fluid -->
 
          {% endblock %}
 
-	
+
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 	        {% block icon-menu %}
 		<div class="row">
@@ -76,17 +86,17 @@
 			</ol>
 		</div><!--/.row-->
 		{% endblock %}
-                
+
 		{% block content %}
 		{% endblock %}
-		
-		
-							
+
+
+
 	<!--		</div><!--/.col-->
 	<!--	</div><!--/.row-->
 	</div>	<!--/.main-->
-	
-        
+
+
         <script src="{% static 'js/jquery.min.js' %}" type="text/javascript"></script>
         <script src="{% static 'js/bootstrap.min.js' %}" type="text/javascript"></script>
         <script src="{% static 'js/chart.min.js' %}"></script>
@@ -99,9 +109,9 @@
 		});
 
 		!function ($) {
-		    $(document).on("click","ul.nav li.parent > a > span.icon", function(){          
-		        $(this).find('em:first').toggleClass("glyphicon-minus");      
-		    }); 
+		    $(document).on("click","ul.nav li.parent > a > span.icon", function(){
+		        $(this).find('em:first').toggleClass("glyphicon-minus");
+		    });
 		    $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
 		}(window.jQuery);
 
@@ -113,11 +123,10 @@
 		})
 	        </script>
                 {% block javascript %}
-                
+
                 {% endblock %}
-                
-      
+
+
     </body>
-    
+
 </html>
-    

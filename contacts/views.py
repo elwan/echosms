@@ -72,7 +72,7 @@ class ContactCreate(LoginRequiredMixin, CreateView):
 
     # def get_queryset(self):
     #    return Groupe.objects.filter(groupe_utilisateur=self.request.user)
-
+    # passe au formulaire le request.user
     def get_form_kwargs(self):
         kwargs = super(ContactCreate, self).get_form_kwargs()
         kwargs.update({'user': self.request.user})
