@@ -35,7 +35,7 @@ class Contact(models.Model):
     prenom = models.CharField(_('prenom'), max_length=100)
     nom = models.CharField(_('nom'), max_length=200)
     about = models.TextField(_('about'), blank=True)
-    groupe = models.ForeignKey('Groupe', verbose_name='Groupe', blank=True)
+    contact_groupe = models.ForeignKey('Groupe', verbose_name='Groupe', blank=True)
     photo = models.ImageField(_('photo'), upload_to='contacts/person/', blank=True)
     pays = CountryField(blank_label='Pays')
     phone_regex = RegexValidator(regex=r'^(7\d{8},?)+$', message="Phone number must be entered in the format: '7xxxxxxxx'. Up to 9 digits allowed.")
