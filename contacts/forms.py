@@ -9,12 +9,12 @@ class CreateContactForm(ModelForm):
 
     class Meta:
         model = Contact
-        fields = ('nom', 'prenom', 'groupe', 'numero_telephone', 'email_address', 'photo', 'pays')
+        fields = ('nom', 'prenom', 'contact_groupe', 'numero_telephone', 'email_address', 'photo', 'pays')
 
     def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user', None)
+        self.user = kwargs.pop('user')
         super(CreateContactForm, self).__init__(*args, **kwargs)
-        self.fields['groupe'].queryset = Groupe.objects.filter(groupe_utilisateur=self.user)
+        self.fields['contact_groupe'].queryset = Groupe.objects.filter(groupe_utilisateur=self.user)
 
 
 class CreateGroupeForm(ModelForm):

@@ -41,7 +41,7 @@ class ContactAdmin(admin.ModelAdmin):
 
     list_display_links = ('prenom', 'nom',)
     list_display = ('prenom', 'nom',)
-    list_filter = ('groupe',)
+    list_filter = ('contact_groupe',)
     ordering = ('prenom', 'nom')
     search_fields = ['^prenom', '^nom']
 

@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, HttpResponse
 from contacts.forms import CreateContactForm, CreateGroupeForm
-#from sva.models import Reponse,Pays_Destination,Message_Erreur,Message_Multi
-from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+# from sva.models import Reponse,Pays_Destination,Message_Erreur,Message_Multi
+from django.views.generic import View, CreateView, DeleteView, ListView, UpdateView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.decorators import login_required  # Verification  des utilisateurs connectés pour les fonctions de vue
 from django.db.models import Q
@@ -10,6 +10,19 @@ from django.contrib.auth.mixins import LoginRequiredMixin  # verification des ut
 from contacts.models import Contact, Groupe
 
 # views générique pour lister  les contacts deja enregistrer
+
+
+class CreateContactFormMod(CreateContactForm, View):
+
+    def __init__(self, *args, **kwargs):
+        #user = self.request.user
+        super(CreateContactFormMod, self).__init__(*args, **kwargs)
+        self.fields['contact_groupe'].queryset = Groupe.objects.filter(groupe_utilisateur=user)
+        # return CreateContactFormMod
+
+    def clean_contact_groupe(self):
+        super(CreateContactFormMod, self).__init__(*args, **kwargs)
+        self.fields['contact_groupe'].queryset = Groupe.objects.filter(groupe_utilisateur=self.request.user)
 
 
 class ListeContact(LoginRequiredMixin, ListView):
@@ -42,12 +55,34 @@ class ContactCreate(LoginRequiredMixin, CreateView):
     template_name = "contacts/create_contact.html"
     form_class = CreateContactForm
     success_url = reverse_lazy("lister_contact")
+    #initial = {'contact_groupe': Groupe.objects.filter(groupe_utilisateur=4)}
+    #form_class['contact_groupe'] = Groupe.objects.filter(groupe_utilisateur=4)
     # Ajouter le usermane et le userid de l'utilisateur connecté
+
+    # def get_initial(self, *args, **kwargs):
+    # contact_groupe = Groupe.objects.filter(groupe_utilisateur=self.request.user)
+    # contact_groupe = get_object_or_404(Groupe, groupe_utilisateur=self.request.user)
+    # return {'contact_groupe': contact_groupe}
+    # return super(ContactCreate, self).get_initial()
+    # initial = super(CreateContactForm, self).get_initial(*args, *kwargs)
+    #initial['contact_groupe'] = Groupe.objects.filter(groupe_utilisateur=self.request.user.id)
+    # return initialg
+    # return {'contact_groupe': 'elwan'}
+    #    return {'contact_groupe': Groupe.objects.filter(groupe_utilisateur=self.request.user.id)}
+
+    # def get_queryset(self):
+    #    return Groupe.objects.filter(groupe_utilisateur=self.request.user)
+
+    def get_form_kwargs(self):
+        kwargs = super(ContactCreate, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
 
     def form_valid(self, form):
         object = form.save(commit=False)
         object.contact_utilisateur = self.request.user
-        #object.utilisateur_id= self.request.user.id
+        #object.contact_groupe = Groupe.objects.filter(groupe_utilisateur=0)
+        # object.utilisateur_id= self.request.user.id
         object.save()
         return super(ContactCreate, self).form_valid(form)
 
@@ -63,7 +98,7 @@ class GroupeCreate(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         object = form.save(commit=False)
         object.groupe_utilisateur = self.request.user
-        #object.utilisateur_id= self.request.user.id
+        # object.utilisateur_id= self.request.user.id
         object.save()
         return super(GroupeCreate, self).form_valid(form)
 
