@@ -8,6 +8,8 @@ from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKe
 #from contacts.managers import SpecialDateManager
 from django_countries.fields import CountryField
 from accounts.models import Profile
+from phonenumber_field.modelfields import PhoneNumberField
+#from country_dialcode.models import Prefix
 
 
 class Groupe(models.Model):
@@ -37,9 +39,11 @@ class Contact(models.Model):
     about = models.TextField(_('about'), blank=True)
     contact_groupe = models.ForeignKey('Groupe', verbose_name='Groupe', blank=True)
     photo = models.ImageField(_('photo'), upload_to='contacts/person/', blank=True)
+    #dialcode = models.ForeignKey(Prefix, verbose_name=_("Destination"), null=True, blank=True, help_text=_("Select Prefix"))
     pays = CountryField(blank_label='Pays')
     phone_regex = RegexValidator(regex=r'^(7\d{8},?)+$', message="Phone number must be entered in the format: '7xxxxxxxx'. Up to 9 digits allowed.")
-    numero_telephone = models.CharField('Numero Téléphone', validators=[phone_regex], max_length=1000)
+    #numero_telephone = models.CharField('Numero Téléphone', validators=[phone_regex], max_length=1000)
+    numero_telephone = PhoneNumberField()
     email_address = models.EmailField('Adresse Email')
     contact_utilisateur = models.ForeignKey(Profile)
     #web_site = GenericRelation('WebSite')

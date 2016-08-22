@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'bootstrap3',
     'contacts',
     'django_countries',
+    'phonenumber_field',
+    # 'country_dialcode',
     #'addressbook',
     #'south',
     #'vobject',
