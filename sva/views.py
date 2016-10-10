@@ -104,7 +104,7 @@ def envoi_message_multi(request, code):
 
     message = Message_Multi.objects.get(code=code)  # recuper l'object à travers son code unique
     liste_numero = message.numero.split(',')  # mettre les numeros dans la liste
-    liste_numero_indicatif = [message.pays.indicatif_pays + num for num in set(liste_numero)]  # ajouter l'indicatif du pays sur chaque numéro dans la liste
+    liste_numero_indicatif = ['221' + num for num in set(liste_numero)]  # ajouter l'indicatif du pays sur chaque numéro dans la liste
     # enlever les doublons de numéros avec la fonction set()
     liste_numero_valide = [num.strip('+') for num in liste_numero_indicatif]  # enlever de la liste le '+' devant l'indicatif
 

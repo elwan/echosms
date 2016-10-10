@@ -4,16 +4,15 @@
 
 <div class="container">
     <div class="row">
-        <div class="jumbotron"> 
+        <div class="jumbotron">
           <form class=""  action=""  method="post">
 	    {% csrf_token %}
 	    {# {form.as_p } #}
-            {% bootstrap_form form %}
+            {% bootstrap_form  %}
 	    <input  class=" btn btn-lg btn-primary btn-bloc" type="submit" value="valider"/>
 	  </form>
-	  
-         </div> 
+
+         </div>
       </div>
   </div>
 {% endblock %}
-

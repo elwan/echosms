@@ -12,17 +12,17 @@ from contacts.models import Contact, Groupe
 # views générique pour lister  les contacts deja enregistrer
 
 
-class CreateContactFormMod(CreateContactForm, View):
+# class CreateContactFormMod(CreateContactForm, View):
 
-    def __init__(self, *args, **kwargs):
-        #user = self.request.user
-        super(CreateContactFormMod, self).__init__(*args, **kwargs)
-        self.fields['contact_groupe'].queryset = Groupe.objects.filter(groupe_utilisateur=user)
-        # return CreateContactFormMod
+#    def __init__(self, *args, **kwargs):
+#user = self.request.user
+#        super(CreateContactFormMod, self).__init__(*args, **kwargs)
+#       self.fields['contact_groupe'].queryset = Groupe.objects.filter(groupe_utilisateur=user)
+#       # return CreateContactFormMod
 
-    def clean_contact_groupe(self):
-        super(CreateContactFormMod, self).__init__(*args, **kwargs)
-        self.fields['contact_groupe'].queryset = Groupe.objects.filter(groupe_utilisateur=self.request.user)
+# def clean_contact_groupe(self):
+#    super(CreateContactFormMod, self).__init__(*args, **kwargs)
+#    self.fields['contact_groupe'].queryset = Groupe.objects.filter(groupe_utilisateur=self.request.user)
 
 
 class ListeContact(LoginRequiredMixin, ListView):
@@ -46,7 +46,12 @@ class ListeGroupe(LoginRequiredMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return Groupe.objects.filter(groupe_utilisateur=self.request.user).order_by('-date_modified')
+        return Groupe.objects.filter(groupe_utilisateur=self.request.user)
+
+    def get_form_kwargs(self):
+        kwargs = super(GroupeCreate, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
 
 
 class ContactCreate(LoginRequiredMixin, CreateView):
@@ -55,28 +60,15 @@ class ContactCreate(LoginRequiredMixin, CreateView):
     template_name = "contacts/create_contact.html"
     form_class = CreateContactForm
     success_url = reverse_lazy("lister_contact")
-    #initial = {'contact_groupe': Groupe.objects.filter(groupe_utilisateur=4)}
-    #form_class['contact_groupe'] = Groupe.objects.filter(groupe_utilisateur=4)
+
     # Ajouter le usermane et le userid de l'utilisateur connecté
-
-    # def get_initial(self, *args, **kwargs):
-    # contact_groupe = Groupe.objects.filter(groupe_utilisateur=self.request.user)
-    # contact_groupe = get_object_or_404(Groupe, groupe_utilisateur=self.request.user)
-    # return {'contact_groupe': contact_groupe}
-    # return super(ContactCreate, self).get_initial()
-    # initial = super(CreateContactForm, self).get_initial(*args, *kwargs)
-    #initial['contact_groupe'] = Groupe.objects.filter(groupe_utilisateur=self.request.user.id)
-    # return initialg
-    # return {'contact_groupe': 'elwan'}
-    #    return {'contact_groupe': Groupe.objects.filter(groupe_utilisateur=self.request.user.id)}
-
     # def get_queryset(self):
     #    return Groupe.objects.filter(groupe_utilisateur=self.request.user)
     # passe au formulaire le request.user
-    def get_form_kwargs(self):
-        kwargs = super(ContactCreate, self).get_form_kwargs()
-        kwargs.update({'user': self.request.user})
-        return kwargs
+    # def get_form_kwargs(self):
+    #    kwargs = super(ContactCreate, self).get_form_kwargs()
+    #    kwargs.update({'user': self.request.user})
+    #    return kwargs
 
     def form_valid(self, form):
         object = form.save(commit=False)
@@ -101,6 +93,12 @@ class GroupeCreate(LoginRequiredMixin, CreateView):
         # object.utilisateur_id= self.request.user.id
         object.save()
         return super(GroupeCreate, self).form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super(GroupeCreate, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
 
 # views générique pour la mise à jour  des messages
 
@@ -127,6 +125,10 @@ class UpdateGroupe(LoginRequiredMixin, UpdateView):
   #  def form_valid(self, form):
   #      self.object = form.save()
   #      return HttpResponseRedirect(self.get_success_url())
+    def get_form_kwargs(self):
+        kwargs = super(UpdateGroupe, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
 
 
 class DeleteContact(LoginRequiredMixin, DeleteView):

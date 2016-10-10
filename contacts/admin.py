@@ -41,15 +41,15 @@ class ContactAdmin(admin.ModelAdmin):
 
     list_display_links = ('prenom', 'nom',)
     list_display = ('prenom', 'nom',)
-    list_filter = ('contact_groupe',)
+    #list_filter = ('contact_groupe',)
     ordering = ('prenom', 'nom')
     search_fields = ['^prenom', '^nom']
 
 
 class GroupAdmin(admin.ModelAdmin):
     list_display_links = ('nom_groupe',)
-    list_display = ('nom_groupe', 'date_modified')
-    ordering = ('-date_modified', 'nom_groupe',)
+    list_display = ('nom_groupe',)
+    ordering = ('nom_groupe',)
     search_fields = ['^nom_groupe', '^about', ]
 
 admin.site.register(Contact, ContactAdmin)
