@@ -63,6 +63,11 @@ class MessageMultiCreate(LoginRequiredMixin, CreateView):
         object.save()
         return super(MessageMultiCreate, self).form_valid(form)
 
+    def get_form_kwargs(self):
+        kwargs = super(MessageMultiCreate, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
 # views générique pour la mise à jour  des messages
 
 

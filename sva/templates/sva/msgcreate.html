@@ -9,6 +9,7 @@
 	    {% csrf_token %}
 	    {#{form.as_p }#}
             {% bootstrap_field form.numero %}
+            {% bootstrap_field form.groupe_numero %}
             {% bootstrap_field form.sender %}
             {% bootstrap_field form.message %}
 	    <input  class=" btn btn-lg btn-primary btn-bloc" type="submit" value="valider"/>

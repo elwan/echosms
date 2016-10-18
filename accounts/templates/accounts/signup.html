@@ -1,5 +1,5 @@
 {% extends 'bases.html' %}
-
+{% load bootstrap3 %}
 
 {% block nav-user-menu %}
 {% endblock %}
@@ -12,7 +12,7 @@
 
 
 {% block content %}
-
+{% bootstrap_javascript jquery=1 %}
 <div class="container">
   <div class="row">
     <div class="col-md-6 col-md-offset-2">
@@ -27,10 +27,11 @@
 
 	    <p class="bs-component">
 	      <!-- <table> -->
-                
-                {{form.media}}
-		{{ form.as_p }}
-		
+
+              {{form.media}}
+	      {{ form.as_p }}
+              {{ form.media.js }}
+
 	       <!--</table> -->
 	    </p>
 	    <p class="bs-component">

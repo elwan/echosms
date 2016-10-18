@@ -1,18 +1,19 @@
 from django import forms
 from django.forms import ModelForm, Form
-from django.contrib.contenttypes.forms import generic_inlineformset_factory as inlineformset_factory
 from contacts.models import Contact, Groupe
+from intl_tel_input.widgets import IntlTelInputWidget
 
 
 class CreateContactForm(ModelForm):
     nom = forms.CharField(label="", max_length=30, widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'nom', 'placeholder': 'Nom', 'required': 'True', 'autofocus': 'True'}))
     prenom = forms.CharField(label="", max_length=30, widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'prenom', 'placeholder': 'Prenom', 'required': 'True', 'autofocus': 'True'}))
-    numero_telephone = forms.CharField(label="", max_length=30, widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'numero_telephone', 'placeholder': 'Numero Telephone', 'required': 'True', 'autofocus': 'True'}))
+    numero_telephone = forms.CharField(label="", widget=IntlTelInputWidget())
+    #numero_telephone = forms.CharField(label="", max_length=30, widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'numero_telephone', 'placeholder': 'Numero Telephone', 'required': 'True', 'autofocus': 'True'}))
     email_address = forms.CharField(label="", max_length=30, widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'email_address', 'placeholder': 'Adresse email', 'required': 'True', 'autofocus': 'True'}))
 
     class Meta:
         model = Contact
-        fields = ('nom', 'prenom', 'numero_telephone', 'photo', 'pays', 'email_address')
+        fields = ('nom', 'prenom', 'numero_telephone', 'photo', 'email_address')
 
    # def __init__(self, *args, **kwargs):
    #     self.user = kwargs.pop('user')

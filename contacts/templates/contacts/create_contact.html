@@ -1,20 +1,22 @@
+
 {% extends 'bases.html' %}
 {% load bootstrap3 %}
 {% block content %}
+{% bootstrap_javascript jquery=1 %}
 
 <div class="container">
     <div class="row">
-        <div class="jumbotron"> 
+      <div class="jumbotron">
+
           <form class=""  action=""  method="post">
 	    {% csrf_token %}
-	    {#{form.as_p }#}
+            {{ form.media }}
             {% bootstrap_form form %}
+
+            {{ form.media.js }}
 	    <input  class=" btn btn-lg btn-primary btn-bloc" type="submit" value="valider"/>
-            
 	  </form>
-	  
-         </div> 
+         </div>
       </div>
   </div>
-{% endblock %}
-
+  {% endblock %}

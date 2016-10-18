@@ -3,6 +3,7 @@ from django.core.validators import RegexValidator
 import random
 import string
 from accounts.models import Profile
+from contacts.models import Groupe
 # Create your models here.
 
 
@@ -78,6 +79,7 @@ class Message_Multi(models.Model):
     numero = models.CharField('Numero Téléphone', validators=[phone_regex], max_length=1000)
     sender = models.CharField('From', max_length=15)
     #pays = models.ForeignKey(Pays_Destination)
+    groupe_numero = models.ManyToManyField(Groupe)
     message = models.TextField('Message', max_length=160)
     #utilisateur = models.CharField('Utilisateur',max_length=20)
     #utilisateur_id = models.IntegerField('ID Utilisateur',default=0)
