@@ -12,7 +12,7 @@ class Contact(models.Model):
     nom = models.CharField(_('nom'), max_length=200)
     about = models.TextField(_('about'), blank=True)
     photo = models.ImageField(_('photo'), upload_to='contacts/person/', blank=True)
-    phone_regex = RegexValidator(regex=r'^(7\d{8},?)+$', message="Phone number must be entered in the format: '7xxxxxxxx'. Up to 9 digits allowed.")
+    #phone_regex = RegexValidator(regex=r'^(7\d{8},?)+$', message="Phone number must be entered in the format: '7xxxxxxxx'. Up to 9 digits allowed.")
     numero_telephone = PhoneNumberField()
     email_address = models.EmailField(_('Adresse Email'))
     contact_utilisateur = models.ForeignKey(Profile)

@@ -7,6 +7,10 @@
       <div class="message">
       	<h3> {{ groupe.nom_groupe }} </h3>
 	<p> {{ groupe.about  }}  </p>
+        {% for num in groupe.contact.all %}
+              {{num.numero_telephone }}
+        {% endfor %}
+        <p> {{ groupe.contact.numero_telephone }}
 	<h4> enregister par {{ request.user.username }} </h4>
        	<div class="btn-group">
 	 <a class="btn btn-primary"  href="{% url "editer_groupe" groupe.id %}" role="button" > Editer </a> {# Editer un message #}
