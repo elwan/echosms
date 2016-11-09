@@ -110,25 +110,20 @@ class MessageMultiDelete(LoginRequiredMixin, DeleteView):
 
 @login_required(login_url="/login/")
 def envoi_message_multi(request, code):
+    liste_numero_valide = []
+    message = Message_Multi.objects.prefetch_related('groupe_numeros__contacts').get(code=code)  # recuper l'object à travers son code unique
+    for groupe in message.groupe_numeros.all():
+        for num in groupe.contacts.all():
+            liste_numero_valide.append(str(num.numero_telephone.country_code) + str(num.numero_telephone.national_number))
 
-    message = Message_Multi.objects.get(code=code)  # recuper l'object à travers son code unique
-    liste_numero = message.numero.split(',')  # mettre les numeros dans la liste
-    # liste_numero
-
-    # liste_numero_indicatif = ['221' + num for num in set(liste_numero)]  # ajouter l'indicatif du pays sur chaque numéro dans la liste
-    # enlever les doublons de numéros avec la fonction set()
-
-    liste_numero_valide = [num.strip('+') for num in liste_numero]  # enlever de la liste le '+' devant l'indicatif
-
-    # reponse=client.send_message({'from':message.sender,'to':numero_valide,'text':message.msg})#envoyer le message
-    # Enregistrer la réponse du message dans la base de donnée
-    #playload={'api_key':'852f8fa2' ,'api_secret':'aa4fcec9ead8902b'}
+    # supprimer les doublons dans la liste de numeros valide
+    liste_numero = list(set(liste_numero_valide))
     # preparer la liste de dictionnaire pour l'envoi des messages
     # En ajoutant le message et les numeros et le sender
     liste_dico_msg = []  # Liste pour contenir les dico en mettre en paramettre dans l'url
     liste_numero_envoi_echec = []  # Liste contenant les numéros des messages qui ont échoués
     liste_numero_envoi_reussi = []  # Liste contenant les numérosn des messages envoyés avec succes
-    for num in liste_numero_valide:
+    for num in liste_numero:
         playload = {'api_key': '852f8fa2', 'api_secret': 'aa4fcec9ead8902b'}
         playload['from'] = message.sender
         playload['to'] = num
