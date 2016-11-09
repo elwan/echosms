@@ -4,46 +4,11 @@ import random
 import string
 from accounts.models import Profile
 from contacts.models import Groupe
+from phonenumber_field.modelfields import PhoneNumberField
 # Create your models here.
+#  sauvegarde de tous les reponses des messages qui sont envoyés via nexmo
 
 
-class Pays_Destination(models.Model):
-    nom_pays = models.CharField('Pays', max_length=25)
-    indicatif_pays = models.CharField('Indicatif', max_length=4)
-    prix_sms = models.IntegerField(default=0)
-
-    def __str__(self):
-        return " {0} ".format(self.nom_pays)
-
-
-# class Message(models.Model):
-#    phone_regex = RegexValidator(regex=r'^7\d{8}$', message="Phone number must be entered in the format: '7xxxxxxxx'. Up to 9 digits allowed.")
-#    numero = models.CharField('Numero Téléphone',validators=[phone_regex],max_length=9)
-#    sender=models.CharField('From',max_length=15)
-#    pays = models.ForeignKey(Pays_Destination)
-#    msg=models.TextField('Message',max_length=160)
-#    utilisateur=models.CharField('Utilisateur',max_length=20)
-#    utilisateur_id=models.IntegerField(default=0)
-#    status_message=models.BooleanField(default=False)
-#    date=models.DateTimeField('Date',auto_now_add=True)
-#    code=models.CharField('Code',max_length=10)
-#
-#    def __str__(self):
-#        return "{0} {1} {2}".format(self.numero,self.msg,self.sender)
-#
-#    def save(self,*args,**kwargs):
-#        if self.pk is None:
-#            self.code_generator(6)
-#            #self.utilisateur=request.username
-#        super(Message,self).save(*args,**kwargs)
-#
-#    def code_generator(self,nb_caractere):
-#        car = string.ascii_letters + string.digits
-#        aleatoire = [random.choice(car) for _ in range(nb_caractere)]
-#
-#        self.code =''.join(aleatoire)
-
- #  sauvegarde de tous les reponses des messages qui sont envoyés via nexmo
 class Reponse(models.Model):
     reseau = models.CharField('Reseau', max_length=10)
     cout_message = models.CharField('Prix_message', max_length=5)
@@ -75,14 +40,10 @@ class Message_Erreur(models.Model):
 
 
 class Message_Multi(models.Model):
-    phone_regex = RegexValidator(regex=r'^(7\d{8},?)+$', message="Phone number must be entered in the format: '7xxxxxxxx'. Up to 9 digits allowed.")
-    numero = models.CharField('Numero Téléphone', validators=[phone_regex], max_length=1000)
+    numero = PhoneNumberField(blank=True)
     sender = models.CharField('From', max_length=15)
-    #pays = models.ForeignKey(Pays_Destination)
-    groupe_numero = models.ManyToManyField(Groupe)
+    groupe_numeros = models.ManyToManyField(Groupe, blank=True)
     message = models.TextField('Message', max_length=160)
-    #utilisateur = models.CharField('Utilisateur',max_length=20)
-    #utilisateur_id = models.IntegerField('ID Utilisateur',default=0)
     utilisateur = models.ForeignKey(Profile)
     status_message = models.BooleanField(default=False)
     date = models.DateTimeField('Date', auto_now_add=True, editable=False)
@@ -94,7 +55,6 @@ class Message_Multi(models.Model):
     def save(self, *args, **kwargs):
         if self.pk is None:
             self.code_generator(7)
-            # self.utilisateur=request.username
         super(Message_Multi, self).save(*args, **kwargs)
 
     def code_generator(self, nb_caractere):

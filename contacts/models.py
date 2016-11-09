@@ -32,11 +32,11 @@ class Groupe(models.Model):
     """Group model."""
     nom_groupe = models.CharField(_('Nom'), max_length=200)
     about = models.TextField(_('about'), blank=True)
-    contact = models.ManyToManyField(Contact, verbose_name='Contacts', blank=True)
+    contacts = models.ManyToManyField(Contact, verbose_name='Contacts', blank=True)
     groupe_utilisateur = models.ForeignKey(Profile)
 
     class Meta:
-        db_table = 'contacts_groups'
+        #db_table = 'contacts_groups'
         ordering = ('nom_groupe',)
         verbose_name = _('groupe')
         verbose_name_plural = _('groupes')

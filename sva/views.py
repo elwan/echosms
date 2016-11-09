@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, HttpResponse
 from sva.forms import MessageMultiForm
-from sva.models import Reponse, Pays_Destination, Message_Erreur, Message_Multi
+from sva.models import Reponse, Message_Erreur, Message_Multi
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.decorators import login_required  # Verification  des utilisateurs connectés pour les fonctions de vue
@@ -54,13 +54,13 @@ class MessageMultiCreate(LoginRequiredMixin, CreateView):
     template_name = "sva/msgcreate.html"
     form_class = MessageMultiForm
     success_url = reverse_lazy("lister_message_multi")
-    # Ajouter le usermane et le userid de l'utilisateur connecté
 
     def form_valid(self, form):
+        #form = MessageMultiForm(self.request.POST)
         object = form.save(commit=False)
         object.utilisateur = self.request.user  # chaque message creer doit porter l'identifiant du createur
-        #object.utilisateur_id= self.request.user.id
         object.save()
+        form.save_m2m()
         return super(MessageMultiCreate, self).form_valid(form)
 
     def get_form_kwargs(self):
@@ -86,9 +86,13 @@ class MessageMultiUpdate(LoginRequiredMixin, UpdateView):
         self.object = form.save()
         return HttpResponseRedirect(self.get_success_url())
 
+    def get_form_kwargs(self):
+        kwargs = super(MessageMultiUpdate, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
+
 # views generic pour supprimer un message deja creer
-
-
 class MessageMultiDelete(LoginRequiredMixin, DeleteView):
     login_url = '/login/'
     model = Message_Multi
@@ -109,6 +113,8 @@ def envoi_message_multi(request, code):
 
     message = Message_Multi.objects.get(code=code)  # recuper l'object à travers son code unique
     liste_numero = message.numero.split(',')  # mettre les numeros dans la liste
+    # liste_numero
+
     # liste_numero_indicatif = ['221' + num for num in set(liste_numero)]  # ajouter l'indicatif du pays sur chaque numéro dans la liste
     # enlever les doublons de numéros avec la fonction set()
 

@@ -24,13 +24,13 @@ class CreateContactForm(ModelForm):
 class CreateGroupeForm(ModelForm):
     nom_groupe = forms.CharField(label=" ", widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nom du groupe', 'required': 'True', 'autofocus': 'True', 'name': 'nom_groupe'}))
     about = forms.CharField(label="", widget=forms.Textarea(attrs={'class': 'form-control', 'name': 'about', 'placeholder': 'Apropos du groupe', 'required': 'True', 'autofocus': 'True'}))
-    contact = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple(), queryset=Contact.objects.all())
+    contacts = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple(), queryset=Contact.objects.all())
 
     class Meta:
         model = Groupe
-        fields = ('nom_groupe', 'contact', 'about')
+        fields = ('nom_groupe', 'contacts', 'about')
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
         super(CreateGroupeForm, self).__init__(*args, **kwargs)
-        self.fields['contact'].queryset = Contact.objects.filter(contact_utilisateur=self.user)
+        self.fields['contacts'].queryset = Contact.objects.filter(contact_utilisateur=self.user)
