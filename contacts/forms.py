@@ -24,7 +24,7 @@ class CreateContactForm(ModelForm):
 class CreateGroupeForm(ModelForm):
     nom_groupe = forms.CharField(label=" ", widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nom du groupe', 'required': 'True', 'autofocus': 'True', 'name': 'nom_groupe'}))
     about = forms.CharField(label="", widget=forms.Textarea(attrs={'class': 'form-control', 'name': 'about', 'placeholder': 'Apropos du groupe', 'required': 'True', 'autofocus': 'True'}))
-    contacts = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple(), queryset=Contact.objects.all())
+    contacts = forms.ModelMultipleChoiceField(label="La liste des Numeros de Telephone", widget=forms.CheckboxSelectMultiple(), queryset=Contact.objects.all())
 
     class Meta:
         model = Groupe
