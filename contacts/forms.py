@@ -28,7 +28,7 @@ class CreateGroupeForm(ModelForm):
 
     class Meta:
         model = Groupe
-        fields = ('nom_groupe', 'contacts', 'about')
+        fields = ('nom_groupe', 'image_groupe', 'contacts', 'about')
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')

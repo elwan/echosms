@@ -31,6 +31,7 @@ class Contact(models.Model):
 class Groupe(models.Model):
     """Group model."""
     nom_groupe = models.CharField(_('Nom'), max_length=200)
+    image_groupe = models.ImageField(_('Image groupe'), upload_to='contacts/groupe/', blank=True)
     about = models.TextField(_('about'), blank=True)
     contacts = models.ManyToManyField(Contact, verbose_name='Contacts', blank=True)
     groupe_utilisateur = models.ForeignKey(Profile)
