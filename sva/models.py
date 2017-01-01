@@ -40,9 +40,9 @@ class Message_Erreur(models.Model):
 
 
 class Message_Multi(models.Model):
-    #phone_regex = RegexValidator(regex=r'^(7\d{8},?)+$', message="Phone number must be entered in the format: '7xxxxxxxx'. Up to 9 digits allowed.")
-    #numero = models.CharField('Numero Téléphone', validators=[phone_regex], max_length=1000)
-    numero = PhoneNumberField(blank=True)
+    phone_regex = RegexValidator(regex=r'^(\d{12},?)+$', message="Phone number must be entered in the format: '221xxxxxxxxx'. Up to 12 digits allowed.")
+    numero = models.CharField('Numero Téléphone', validators=[phone_regex], max_length=1000)
+    #numero = PhoneNumberField(blank=True)
     sender = models.CharField('From', max_length=15)
     groupe_numeros = models.ManyToManyField(Groupe, blank=True)
     message = models.TextField('Message', max_length=160)

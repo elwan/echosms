@@ -9,7 +9,7 @@ class CreateContactForm(ModelForm):
     prenom = forms.CharField(label="", max_length=30, widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'prenom', 'placeholder': 'Prenom', 'required': 'True', 'autofocus': 'True'}))
     numero_telephone = forms.CharField(label="", widget=IntlTelInputWidget())
     #numero_telephone = forms.CharField(label="", max_length=30, widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'numero_telephone', 'placeholder': 'Numero Telephone', 'required': 'True', 'autofocus': 'True'}))
-    email_address = forms.CharField(label="", max_length=30, widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'email_address', 'placeholder': 'Adresse email', 'required': 'True', 'autofocus': 'True'}))
+    email_address = forms.CharField(label="", max_length=30, widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'email_address', 'placeholder': 'Adresse email', 'autofocus': 'True'}))
 
     class Meta:
         model = Contact

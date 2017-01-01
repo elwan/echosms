@@ -116,8 +116,11 @@ def envoi_message_multi(request, code):
         for num in groupe.contacts.all():
             liste_numero_valide.append(str(num.numero_telephone.country_code) + str(num.numero_telephone.national_number))
 
+    if message.numero:
+        liste_numero_manuel = list(set(message.numero.split(',')))
+
     # supprimer les doublons dans la liste de numeros valide
-    liste_numero = list(set(liste_numero_valide))
+    liste_numero = list(set(liste_numero_valide + liste_numero_manuel))
     # preparer la liste de dictionnaire pour l'envoi des messages
     # En ajoutant le message et les numeros et le sender
     liste_dico_msg = []  # Liste pour contenir les dico en mettre en paramettre dans l'url

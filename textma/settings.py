@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'django_countries',
     'phonenumber_field',
     'intl_tel_input',
+    'materializecssform',
+    'rest_framework',
     # 'country_dialcode',
     #'addressbook',
     #'south',

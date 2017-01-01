@@ -5,7 +5,7 @@ from django.forms import ModelForm
 
 
 class MessageMultiForm(ModelForm):
-    numero = forms.CharField(label="", max_length=1000, widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'numero', 'placeholder': 'Numero Telephone', 'required': 'True', 'autofocus': 'True'}))
+    numero = forms.CharField(label="", max_length=1000, widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'numero', 'placeholder': 'Numero Telephone', 'autofocus': 'True'}))
     sender = forms.CharField(label="", max_length=30, widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'sender', 'placeholder': 'sender', 'required': 'True', 'autofocus': 'True'}))
     message = forms.CharField(label="", max_length=160, widget=forms.Textarea(attrs={'class': 'form-control', 'name': 'message', 'placeholder': 'Entrer votre message', 'required': 'True', 'autofocus': 'True'}))
     groupe_numeros = forms.ModelMultipleChoiceField(label="Mes groupes :", widget=forms.CheckboxSelectMultiple(), queryset=Groupe.objects.all())
